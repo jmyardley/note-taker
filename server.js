@@ -16,8 +16,14 @@ app.get("/notes", (req, res) => {
 });
 
 // Get '*'
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./public/index.html"));
+});
 
 // Get '/api.notes/'
+app.get("/api/notes", (req, res) => {
+    res.json(db);
+});
 
 // POST '/api/notes'
 
