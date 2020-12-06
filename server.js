@@ -15,20 +15,36 @@ app.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
+// Get '/api.notes/'
+app.get("/api/notes", (req, res) => {
+    res.json(db);
+});
 // Get '*'
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
-// Get '/api.notes/'
-app.get("/api/notes", (req, res) => {
-    res.json(db);
-});
 
 // POST '/api/notes'
+app.post("/api/notes", (req, res) => {
+    let notes = req.body;
+    notes.id = (db.length).toString();
+    db.push(notes);
+    fs.writeFile("./db/db.json", JSON.stringify(db), function(err){
+        if (err){
+            console.log("err");
+            res.sendStatus(404);
+        } else {
+            console.log("Success");
+            res.sendStatus(200);
+        }
+    })
+});
 
 // DELETE '/api/notes/id'
+app.delete('/api/notes/:id', function(req, res){
 
+});
 
 
 
